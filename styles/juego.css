@@ -1,0 +1,33 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing:border-box ;
+}
+body{
+
+	background-image: url(../assets/image/fondoBender.avif);
+	background-size: cover;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+canvas{
+
+	border:4px solid rgb(105, 137, 205) ;
+
+}
+
+.botones{
+margin: 30px;
+
+}
+button{
+padding: 15px;
+border-radius: 15px;
+background-color: darkgray;
+
+
+}
+.none{
+	display: none;
+}
