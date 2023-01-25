@@ -8,6 +8,22 @@ const balas = []
 
 const aliens = []
 
+const aliensG = []
+
+//Dibujos de todo
+const vidas = new Image()
+vidas.src = '../FuturamaEmi/assets/image/vidas.png'
+const naveI = new Image()
+naveI.src = '../FuturamaEmi/assets/image/naveIz.png'
+const navef = new Image()
+navef.src = '../FuturamaEmi/assets/image/nave.png'
+const asteroide = new Image()
+asteroide.src = '../FuturamaEmi/assets/image/asteroide.png'
+const alienGi = new Image()
+alienGi.src = '../FuturamaEmi/assets/image/alien.png'
+const bullet = new Image()
+bullet.src = '../FuturamaEmi/assets/image/bala.png'
+
 //Personaje - Clase
 class PlanetExpress {
   constructor(x, y, w, h) {
@@ -15,11 +31,13 @@ class PlanetExpress {
     this.y = y
     this.w = w
     this.h = h
+    this.img = navef
     this.velocidad = 10
+    this.lifes = 4
   }
   //Metodos de planet
   dibujarse() {
-    ctx.fillRect(this.x, this.y, this.w, this.h)
+    ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
   }
   disparar() {
     const bala = new Bala(this.x + this.w, this.y + this.h / 2)
@@ -29,11 +47,13 @@ class PlanetExpress {
     if (this.x < 900) {
       this.x += this.velocidad
     }
+    this.img = navef
   }
   atras() {
     if (this.x > 0) {
       this.x -= this.velocidad
     }
+    this.img = naveI
   }
   arriba() {
     if (this.y > 0) {
@@ -53,10 +73,11 @@ class Bala {
   constructor(x, y) {
     this.x = x
     this.y = y
+    this.img = bullet
   }
 
   dibujarse() {
-    ctx.fillRect(this.x, this.y, 10, 5)
+    ctx.drawImage(this.img, this.x, this.y, 30, 20)
     this.x += 20
     if (this.x > 1000) {
       balas.shift()
@@ -64,15 +85,44 @@ class Bala {
   }
 }
 //Alien gigante
+class AlienG {
+  constructor(x, y) {
+    this.x = x
+    this.y = y
+    this.direccion = 'arriba'
+    this.lifes = 50
+  }
+
+  dibujarse() {
+    if (this.y == 0) {
+      this.direccion = 'abajo'
+    }
+
+    if (this.y + 100 == 500) {
+      this.direccion = 'arriba'
+    }
+
+    if (this.direccion == 'arriba') {
+      this.y -= 5
+    } else {
+      this.y += 5
+    }
+
+    ctx.drawImage(alienGi, this.x, this.y, 200, 100)
+  }
+}
+
+//Alien
 class Alien {
   constructor(x, y) {
     this.x = x
     this.y = y
+    this.img = asteroide
   }
   dibujarse() {
     this.x -= 10
 
-    ctx.fillRect(this.x, this.y, 30, 50)
+    ctx.drawImage(this.img, this.x, this.y, 50, 50)
   }
 }
 
@@ -81,7 +131,9 @@ ctx.fillStyle = 'white'
 
 //Instancia
 
-const nave = new PlanetExpress(10, 145, 100, 60)
+const aG = new AlienG(800, 200, 200, 100)
+
+const nave = new PlanetExpress(10, 145, 150, 60)
 
 //Las teclas
 
@@ -104,22 +156,56 @@ document.addEventListener('keydown', (evento) => {
   }
 })
 
-//Funcione spara empezar juego
+//Funciones para empezar juego
 
 function empezarJuego() {
   setInterval(() => {
     console.log('estamos')
     ctx.clearRect(0, 0, 1000, 500)
     nave.dibujarse()
+    aG.dibujarse()
+
     //Balas dibujadas
-    balas.forEach((bala) => {
+    balas.forEach((bala, indexBala) => {
       bala.x += 2
       bala.dibujarse()
+      //choque de balas con meteoritos!!!!
+      aliens.forEach((alien, indexAlien) => {
+        if (alien.x <= bala.x && bala.y >= alien.y && bala.y <= alien.y + 40) {
+          aliens.splice(indexAlien, 1)
+          balas.splice(indexBala, 1)
+        }
+      })
+      //////
+      function alienGi() {
+        if (alieng.x <= bala.x && bala.y >= alieng.y && bala.y <= alieng.y) {
+          balas.splice(indexBala, 1)
+          aG.lifes--
+        }
+      }
+
+      //if(alieng <= bala.x && bala.y >= alieng.y && bala.y <= alieng.y)
     })
     //dibujar aliens
-    aliens.forEach((alien) => {
+    aliens.forEach((alien, indexAlien) => {
       alien.dibujarse()
+
+      //Colision de la nave vs meteoritos
+      if (
+        alien.x <= nave.x + 150 &&
+        nave.y >= alien.y &&
+        nave.x <= alien.x &&
+        nave.y <= alien.y + 50
+      ) {
+        nave.lifes--
+        aliens.splice(indexAlien, 1)
+      }
     })
+    // Pintar da;o
+    ctx.fillText(`${aG.lifes} Vida`, 900, 10)
+
+    //Pintar Vidas
+    mostrarVidas()
   }, 50)
 }
 
@@ -128,14 +214,39 @@ function empezarJuego() {
 let btn = document.getElementById('jugar')
 btn.addEventListener('click', () => {
   empezarJuego()
+  crearAliens()
 
   btn.classList.add('none')
 })
 
 //creacion de alien
+function crearAliens() {
+  setInterval(() => {
+    const posicionY = Math.floor(Math.random() * 450)
+    const a = new Alien(1000, posicionY)
+    aliens.push(a)
+  }, 1000)
+}
 
-setInterval(() => {
-  const posicionY = Math.floor(Math.random() * 500)
-  const a = new Alien(1000, posicionY)
-  aliens.push(a)
-}, 3000)
+//Mostrar vida de planetExpress
+
+function mostrarVidas() {
+  if (nave.lifes === 4) {
+    ctx.drawImage(vidas, 10, 0, 40, 30)
+    ctx.drawImage(vidas, 40, 0, 40, 30)
+    ctx.drawImage(vidas, 70, 0, 40, 30)
+    ctx.drawImage(vidas, 100, 0, 40, 30)
+  }
+  if (nave.lifes === 3) {
+    ctx.drawImage(vidas, 10, 0, 40, 30)
+    ctx.drawImage(vidas, 40, 0, 40, 30)
+    ctx.drawImage(vidas, 70, 0, 40, 30)
+  }
+  if (nave.lifes === 2) {
+    ctx.drawImage(vidas, 10, 0, 40, 30)
+    ctx.drawImage(vidas, 40, 0, 40, 30)
+  }
+  if (nave.lifes === 1) {
+    ctx.drawImage(vidas, 10, 0, 40, 30)
+  }
+}

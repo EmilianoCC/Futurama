@@ -4,8 +4,36 @@
 	box-sizing: border-box;
 }
 body{
-	background-image: url("../assets/image/Benderfondo.jpg");
-	background-repeat: no-repeat;
-	background-size: cover;
+	width: 100vw;
+	height: 100vh;
+	background-image: url("../assets/image/fondoInicio.jpg");
+	background-repeat: no-repeat; 
+	background-size:cover;
+}
+.menu{
+	width: 100vw;
+	height: 100vh;
+	padding: 250px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 50px;
+}
+button{
+	padding: 25px 25px;
+	border-radius: 20px;
+	background: transparent;
+	width: 300px;
+	color: azure;
+	font-size: 30px;
+	border: 4px solid white;
+	margin-bottom: 50px;
+	font-family: 'Comic Neue', cursive;
+
+}
+button:hover{
+	background-color: rgb(7, 3, 3,.5);
+	animation:heartBeat;
+	animation-duration: 1s;
 }
 
