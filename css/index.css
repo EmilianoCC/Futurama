@@ -6,7 +6,7 @@
 body{
 	width: 100vw;
 	height: 100vh;
-	background-image: url("../assets/image/fondoInicio.jpg");
+	background-image: url("../assets/image/nuevoFondoInicio.jpg");
 	background-repeat: no-repeat; 
 	background-size:cover;
 	
@@ -21,7 +21,7 @@ body{
 	align-items: center;
 	margin-top: 50px;
 }
-button{
+.btn-1{
 	padding: 25px 25px;
 	border-radius: 20px;
 	background: transparent;
@@ -34,9 +34,34 @@ button{
 
 
 }
-button:hover{
+
+.btn{
+		padding: 25px 25px;
+		border-radius: 20px;
+		background: transparent;
+		width: 300px;
+		color: azure;
+		font-size: 30px;
+		border: 4px solid white;
+		margin-bottom: 50px;
+		font-family: 'Comic Neue', cursive;
+	
+	
+	}
+
+
+.btn-1:hover{
+	background-color: rgb(7, 3, 3,.5);
+	animation:heartBeat;
+	animation-duration: 1s;
+	border:1px solid white;
+}
+.btn:hover{
 	background-color: rgb(7, 3, 3,.5);
 	animation:heartBeat;
 	animation-duration: 1s;
 }
 
+.modal-backdrop.show{
+	display: none !important;
+}
