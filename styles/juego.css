@@ -25,9 +25,42 @@ button{
 padding: 15px;
 border-radius: 15px;
 background-color: darkgray;
+justify-content: space-between;
 
 
 }
 .none{
-	display: none;
+	display: none !important;
+}
+.gameOver{
+
+	width: 100vw;
+	height: 100vh;
+	background-image: url("../assets/image/final.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.gameOver button:hover{
+	background-color: black;
+	color: azure;
+	border: 1px solid white;
+	
+
+}
+.gameWin{
+	width: 100vw;
+	height: 100vh;
+	background-image: url("../assets/image/finalfeliz.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	display: flex;
+	align-items:center;
+	justify-content: center;
+}
+.gameWin h1{
+	align-content: space-around;
+	color: azure;
 }

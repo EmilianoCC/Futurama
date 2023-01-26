@@ -1,6 +1,18 @@
 const lienzo = document.getElementById('space')
 const ctx = lienzo.getContext('2d')
 
+//Seleccion menu
+
+const menu = document.querySelector('.botones')
+
+//Seleccion gameOver
+
+const gameOver = document.querySelector('.gameOver')
+
+//Seleccion gameWin
+
+const gameWin = document.querySelector('.gameWin')
+
 //Balas
 const balas = []
 
@@ -160,15 +172,28 @@ document.addEventListener('keydown', (evento) => {
 
 function empezarJuego() {
   setInterval(() => {
-    console.log('estamos')
     ctx.clearRect(0, 0, 1000, 500)
     nave.dibujarse()
     aG.dibujarse()
+
+    if (nave.lifes === 0) {
+      setGameOver()
+    }
 
     //Balas dibujadas
     balas.forEach((bala, indexBala) => {
       bala.x += 2
       bala.dibujarse()
+
+      // Choque
+      if (aG.x <= bala.x && aG.y <= bala.y && aG.y + 100 >= bala.y) {
+        balas.splice(indexBala, 1)
+        aG.lifes--
+      }
+      if (aG.lifes === 0) {
+        setGameWin()
+      }
+
       //choque de balas con meteoritos!!!!
       aliens.forEach((alien, indexAlien) => {
         if (alien.x <= bala.x && bala.y >= alien.y && bala.y <= alien.y + 40) {
@@ -177,13 +202,6 @@ function empezarJuego() {
         }
       })
       //////
-      function alienGi() {
-        if (alieng.x <= bala.x && bala.y >= alieng.y && bala.y <= alieng.y) {
-          balas.splice(indexBala, 1)
-          aG.lifes--
-        }
-      }
-
       //if(alieng <= bala.x && bala.y >= alieng.y && bala.y <= alieng.y)
     })
     //dibujar aliens
@@ -202,7 +220,8 @@ function empezarJuego() {
       }
     })
     // Pintar da;o
-    ctx.fillText(`${aG.lifes} Vida`, 900, 10)
+    ctx.font = '20px Arial'
+    ctx.fillText(`${aG.lifes} Vida`, 900, 20)
 
     //Pintar Vidas
     mostrarVidas()
@@ -249,4 +268,21 @@ function mostrarVidas() {
   if (nave.lifes === 1) {
     ctx.drawImage(vidas, 10, 0, 40, 30)
   }
+}
+
+//Game Over
+
+function setGameOver() {
+  //Agregar la clase none al menu y canvas
+  lienzo.classList.add('none')
+  menu.classList.add('none')
+  gameOver.classList.remove('none')
+}
+
+//Game Win
+
+function setGameWin() {
+  lienzo.classList.add('none')
+  menu.classList.add('none')
+  gameWin.classList.remove('none')
 }

@@ -9,11 +9,13 @@ body{
 	background-image: url("../assets/image/fondoInicio.jpg");
 	background-repeat: no-repeat; 
 	background-size:cover;
+	
 }
 .menu{
 	width: 100vw;
 	height: 100vh;
 	padding: 250px;
+	padding-top: 100px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -29,6 +31,7 @@ button{
 	border: 4px solid white;
 	margin-bottom: 50px;
 	font-family: 'Comic Neue', cursive;
+
 
 }
 button:hover{
