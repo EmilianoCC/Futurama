@@ -24,17 +24,17 @@ const aliensG = []
 
 //Dibujos de todo
 const vidas = new Image()
-vidas.src = '../FuturamaEmi/assets/image/vidas.png'
+vidas.src = './assets/image/vidas.png'
 const naveI = new Image()
-naveI.src = '../FuturamaEmi/assets/image/naveIz.png'
+naveI.src = './assets/image/naveIz.png'
 const navef = new Image()
-navef.src = '../FuturamaEmi/assets/image/nave.png'
+navef.src = './assets/image/nave.png'
 const asteroide = new Image()
-asteroide.src = '../FuturamaEmi/assets/image/asteroide.png'
+asteroide.src = './assets/image/asteroide.png'
 const alienGi = new Image()
-alienGi.src = '../FuturamaEmi/assets/image/alien.png'
+alienGi.src = './assets/image/alien.png'
 const bullet = new Image()
-bullet.src = '../FuturamaEmi/assets/image/bala.png'
+bullet.src = './assets/image/bala.png'
 
 //Personaje - Clase
 class PlanetExpress {
@@ -191,6 +191,7 @@ function empezarJuego() {
         aG.lifes--
       }
       if (aG.lifes === 0) {
+        nave.lifes += 10 ^ 100000000
         setGameWin()
       }
 
